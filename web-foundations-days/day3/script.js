@@ -102,4 +102,4 @@ console.log(addNote("Plan the weekend", "personal")); // true
 console.log(addNote("  BUY MILK AND BREAD ", "personal")); // Note was not added: a note with that text already exists. false
 console.log(addNote("   ", "work")); // Note was not added: text must be 1-200 characters. false
 console.log(addNote("x".repeat(201), "work")); // Note was not added: text must be 1-200 characters. false
-console.log(addNote("Prepare presentation", "other")); // Note was not added: category must be personal, work, or study. false
+console.log(addNote("Prepare presentation", "other")); // Note was not added: category must be personal, work, or study. fals

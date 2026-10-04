@@ -53,7 +53,6 @@ noteText.addEventListener("keydown", (event) => {
     clearNote();
   }
 });
-
 themeToggle.addEventListener("click", () => {
   setTheme(!document.body.classList.contains("dark"));
 });

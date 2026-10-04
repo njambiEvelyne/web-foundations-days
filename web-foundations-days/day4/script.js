@@ -15,7 +15,7 @@ function updateCounts() {
   const wordTotal = trimmedText ? trimmedText.split(/\s+/).length : 0;
 
   charCount.textContent = `${characterTotal} / ${CHARACTER_LIMIT} characters`;
-  wordCount.textContent = `${wordTotal} ${wordTotal === 1 ? "word" : "words"}`;
+  wordCount.textContent = `${wordTotal} ${wordTotal === 1 ? "word" : "words"`;
   charCount.classList.toggle("warning", characterTotal > 180);
   charCount.classList.toggle("over", characterTotal > CHARACTER_LIMIT);
 }

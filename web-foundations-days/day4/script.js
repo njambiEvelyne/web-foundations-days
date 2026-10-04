@@ -6,7 +6,7 @@ const themeToggle = document.querySelector("#theme-toggle");
 
 const DRAFT_KEY = "day4-note-draft";
 const THEME_KEY = "day4-note-theme";
-const CHARACTER_LIMIT = 200
+const CHARACTER_LIMIT = 200;
 
 function updateCounts() {
   const text = noteText.value;

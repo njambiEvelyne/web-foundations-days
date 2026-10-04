@@ -1,0 +1,132 @@
+:root {
+  color-scheme: light;
+  --page-background: #f3f4f6;
+  --card-background: #ffffff;
+  --text-color: #1f2937;
+  --muted-color: #6b7280;
+  --border-color: #d1d5db;
+  --button-background: #2563eb;
+  --button-text: #ffffff;
+  --warning-color: #c2410c;
+  --over-color: #dc2626;
+}
+
+body.dark {
+  color-scheme: dark;
+  --page-background: #111827;
+  --card-background: #1f2937;
+  --text-color: #f9fafb;
+  --muted-color: #d1d5db;
+  --border-color: #4b5563;
+  --button-background: #3b82f6;
+  --button-text: #ffffff;
+  --warning-color: #fb923c;
+  --over-color: #f87171;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 2rem 1rem;
+  background: var(--page-background);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.note-app {
+  width: min(100%, 640px);
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--card-background);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 8%);
+}
+
+.app-header,
+.counters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+h1 {
+  margin: 0 0 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  min-height: 200px;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--card-background);
+  color: var(--text-color);
+  font: inherit;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+textarea:focus-visible,
+button:focus-visible {
+  outline: 3px solid #60a5fa;
+  outline-offset: 2px;
+}
+
+.counters {
+  flex-wrap: wrap;
+  margin: 0.5rem 0 1rem;
+  color: var(--muted-color);
+}
+
+.counters p {
+  margin: 0;
+}
+
+.warning {
+  color: var(--warning-color);
+}
+
+.over {
+  color: var(--over-color);
+  font-weight: 700;
+}
+
+button {
+  padding: 0.65rem 1rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--button-background);
+  color: var(--button-text);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+button:hover {
+  filter: brightness(0.92);
+}
+
+@media (max-width: 480px) {
+  .note-app {
+    margin: 0 auto;
+    padding: 1.25rem;
+  }
+
+  .app-header {
+    align-items: flex-start;
+  }
+}

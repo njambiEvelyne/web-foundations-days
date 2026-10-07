@@ -3,7 +3,6 @@
 Base path: `/api/books`
 
 ## Endpoints
-
 - **List books**
   - Method: `GET`
   - Path: `/api/books`

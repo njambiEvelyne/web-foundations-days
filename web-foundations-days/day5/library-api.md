@@ -44,5 +44,5 @@ Base path: `/api/books`
 
 ## Error responses
 
-- `400 Bad Request` — The request body is missing a required field, such as `title`, when creating a book.
-- `404 Not Found` — The requested book ID does not exist, such as `GET /api/books/9999`.
+- `400 Bad Request` - The request body is missing a required field, such as `title`, when creating a book.
+- `404 Not Found` - The requested book ID does not exist, such as `GET /api/books/9999`.

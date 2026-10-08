@@ -1,7 +1,6 @@
 # SnapShare scaling plan
 
 ## Assumptions and estimates
-
 - There are 10 million registered users, and 10% are active on an average day, giving **1 million daily active users (DAU)**.
 - Each DAU uploads one photo and requests 50 feed pages per day, so the system handles **1 million uploads** and **50 million feed-page views per day**.
 - Traffic is averaged across 24 hours (86,400 seconds); feed-page peak traffic is estimated at 5 times the average. Uploads per second below are the daily average; real upload peaks may be higher.

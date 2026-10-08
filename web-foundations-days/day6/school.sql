@@ -10,7 +10,6 @@ CREATE TABLE courses (
     course_id INTEGER PRIMARY KEY,
     course_name TEXT NOT NULL UNIQUE
 );
-
 CREATE TABLE enrolments (
     student_id INTEGER NOT NULL,
     course_id INTEGER NOT NULL,

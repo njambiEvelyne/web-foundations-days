@@ -1,5 +1,4 @@
 # Reflection
-
 The most difficult concept in the course was keeping data correct when many requests happen at the same time. For TicketHub, that means two customers might both see the same seat as available and try to reserve it. I worked through this by tracing both requests step by step and identifying where the database transaction, row lock, and uniqueness constraint must decide which request wins. That helped me distinguish a seat-map display from an actual reservation.
 
 I have not received feedback on this capstone yet, so I cannot honestly attribute an improvement to someone else's comments. On review, I would improve the sale-capacity plan by testing how many seat holds per second the database can safely commit and setting the waiting-room admission rate from those measurements. The current estimates identify the scale of the burst, but they do not prove a particular database configuration will meet the response-time targets.

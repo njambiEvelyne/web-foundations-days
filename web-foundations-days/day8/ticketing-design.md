@@ -64,7 +64,7 @@ Use a relational SQL database because seat ownership, holds, and payments need f
 | `seats` | `seat_id` primary key; `event_id` foreign key; label, price, status (`available`, `held`, or `sold`); nullable `hold_id` and `hold_expires_at`; unique (`event_id`, `label`). |
 | `holds` | `hold_id` primary key; `user_id` and `event_id` foreign keys; expiry and status (`active`, `released`, `expired`, or `converted`). |
 | `orders` | `order_id` primary key; `user_id` and `hold_id` foreign keys; payment status, amount, and provider reference. A unique `hold_id` prevents creating multiple orders from the same hold. |
-| `order_items` | `order_id` and `seat_id` foreign keys; ticket price and ticket identifier. A unique constraint on `seat_id` prevents a seat from appearing in two completed orders. |
+| `order_items` | `order_id` and `seat_id` foreign keys; ticket price and ticket identifier. Insert rows only when payment is confirmed; a unique constraint on `seat_id` prevents a seat from appearing in two completed orders. |
 
 Relationships: one user can create many holds and orders; one event has many seats and holds; one hold can cover multiple seats; one order has one or more order items; and each order item refers to exactly one seat. Index `events(date, location)`, `seats(event_id, status)`, `holds(user_id, status)`, and `orders(user_id, payment_status)` for common lookups.
 
@@ -72,7 +72,7 @@ Relationships: one user can create many holds and orders; one event has many sea
 
 The primary SQL database is authoritative; neither the cache nor the seat-map response can reserve inventory. To hold seats, the application starts a transaction, locks the requested seat rows (in a consistent ID order to reduce deadlocks), and checks that every seat is available or belongs to a hold that has expired. It creates one hold, updates those seats to `held` with that hold ID and expiry, then commits. If even one seat is unavailable, it rolls back the whole transaction and returns `409 Conflict`. Concurrent buyers attempting the same seat serialize on its row lock; only one can commit the transition from available to held.
 
-When a hold expires or is released, a transaction locks its seats and changes them back to available only if they still reference that hold. Payment finalization locks the hold and seats, verifies the hold is active, inserts the order and its items, and changes the seats to sold in one transaction. The unique `order_items.seat_id` constraint is a final database-level safeguard against selling a seat twice. Payment callbacks are signature-verified and idempotent. If payment succeeds after the hold has expired and the seats cannot safely be assigned, the order is not marked paid and the payment is voided or refunded.
+When a hold expires or is released, a transaction locks its seats and changes them back to available only if they still reference that hold. Creating a pending order records the hold and payment attempt but does not insert order items. Payment finalization locks the hold and seats, verifies the hold is active, inserts the order items, and changes the seats to sold in one transaction. The unique `order_items.seat_id` constraint is a final database-level safeguard against selling a seat twice. Payment callbacks are signature-verified and idempotent. If payment succeeds after the hold has expired and the seats cannot safely be assigned, the order is not marked paid and the payment is voided or refunded.
 
 ## 5. Architecture
 
@@ -108,7 +108,7 @@ When a hold expires or is released, a transaction locks its seats and changes th
                            +---------+----------+             +----------+---------+
                            | SQL Primary        |             | Payment Provider   |
                            | seats, holds,      |             | tokenized payment |
-                           | orders, tickets    |<------------| signed webhooks    |
+                           | orders, ticket items|<-----------| signed webhooks    |
                            +---------+----------+             +--------------------+
                                      | commit events
                                      v
